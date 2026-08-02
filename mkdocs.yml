@@ -1,0 +1,80 @@
+# mkdocs-material config. Docs ship at the subdomain docs.reckonresearch.com.
+# Build:   pip install mkdocs-material && mkdocs build
+# Deploy:  mkdocs gh-deploy   (pushes site/ to the gh-pages branch)
+# The CNAME file in this folder carries the subdomain into the built site.
+site_name: berth Documentation
+
+# Maintainer note, not a page.
+exclude_docs: |
+  assets/README.md
+site_description: A placement estimator for inference engineers. Predict $/Mtok, TTFT, and TPOT before you rent the GPU.
+site_url: https://docs.reckonresearch.com/
+repo_url: https://github.com/reckonresearch/berth
+repo_name: reckonresearch/berth
+
+theme:
+  name: material
+  # Brand mark in the header, replacing Material's default book icon.
+  # Copy these two from the site repo before building:
+  #   cp <site-repo>/assets/reckon-mark-white.png docs/assets/
+  #   cp <site-repo>/favicon.ico                  docs/assets/
+  logo: assets/reckon-mark-white.png
+  favicon: assets/favicon.ico
+  # Without this the repo link renders a generic git glyph, not the octocat.
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: black
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+nav:
+  - berth:
+      - Overview: index.md
+      - Get Started: quickstart.md
+      - Silicon and Models: silicon-and-models.md
+      - The Physics: the-physics.md
+      - The Placement Premium: placement-premium.md
+      - Validation (P0): validation-p0.md
+      - Verify and Contribute: verify-and-contribute.md
+      - API Reference: api-reference.md
+  - Worked Examples:
+      - Overview: examples/index.md
+      - Reproduce the Placement Premium: examples/premium-walkthrough.md
+  - Tutorials:
+      - Overview: tutorials/index.md
+      - "101: Hello berth": tutorials/101-hello-berth.md
+      - "201: Policies and SLOs": tutorials/201-policies-and-slos.md
+      - "301: Calibrate from Traces": tutorials/301-calibrate-from-traces.md
+      - "401: Tail-Aware Sizing": tutorials/401-tail-aware-sizing.md
+  - Changelog: changelog.md
+  - Support: support.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - tables
+  - toc:
+      permalink: true
+
+copyright: Reckon Research. berth is Apache-2.0.
