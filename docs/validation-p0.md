@@ -36,7 +36,8 @@ behind untuned decode prediction.
 
 Prefill of a synchronous batch is serial: no request emits a first token until
 every prompt in the batch has been prefilled. Measured effective parallelism is
-1.09 on both cards. This was confirmed against the sharpest objection: the
+1.09 on both cards, both under vLLM 0.6.3. Whether this transfers to another
+scheduler is open and pre-registered. This was confirmed against the sharpest objection: the
 harness records the median first-token time across concurrent streams, and if
 each request emitted on its own prefill the implied parallelism would be near
 two. It is near one. The recorded median is the batch tail.

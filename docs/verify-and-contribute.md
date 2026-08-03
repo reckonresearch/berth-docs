@@ -25,6 +25,19 @@ Start a model server on your GPU, then point the harness at it:
         --model-id meta-llama/Meta-Llama-3-8B \
         --out traces.jsonl
 
+If the endpoint requires a key, pass `--api-key` or set `BERTH_API_KEY` in the
+environment. Do not redeploy the server without auth to work around a 401: a
+differently configured server is a different measurement, and the numbers will
+not compare to anything.
+
+Prompts are unique per request, and that is load-bearing rather than cosmetic.
+Identical prompts plus automatic prefix caching, which is on by default in
+current vLLM and SGLang, means the first request prefills and the rest are
+served from cache. TTFT then stops measuring prefill entirely, and nothing
+errors. The harness probes for caching at startup and records what it finds,
+because a cell measured on a deployment with caching on does not transfer to
+one without it.
+
 The sweep runs a grid of batch sizes, prompt lengths, and output lengths and
 writes one JSON line per cell. Then check berth's predictions against what your
 hardware actually did:
