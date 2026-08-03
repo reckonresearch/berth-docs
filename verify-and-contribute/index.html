@@ -1137,6 +1137,17 @@ you rent needs nothing beyond a Python interpreter and a running model server.</
     --model-id meta-llama/Meta-Llama-3-8B \
     --out traces.jsonl
 </code></pre></div>
+<p>If the endpoint requires a key, pass <code>--api-key</code> or set <code>BERTH_API_KEY</code> in the
+environment. Do not redeploy the server without auth to work around a 401: a
+differently configured server is a different measurement, and the numbers will
+not compare to anything.</p>
+<p>Prompts are unique per request, and that is load-bearing rather than cosmetic.
+Identical prompts plus automatic prefix caching, which is on by default in
+current vLLM and SGLang, means the first request prefills and the rest are
+served from cache. TTFT then stops measuring prefill entirely, and nothing
+errors. The harness probes for caching at startup and records what it finds,
+because a cell measured on a deployment with caching on does not transfer to
+one without it.</p>
 <p>The sweep runs a grid of batch sizes, prompt lengths, and output lengths and
 writes one JSON line per cell. Then check berth's predictions against what your
 hardware actually did:</p>
