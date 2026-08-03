@@ -478,6 +478,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prefill: compute plus a fixed floor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subtract-the-floor-before-taking-any-ratio-derived-from-ttft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subtract the floor before taking any ratio derived from TTFT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1039,6 +1056,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prefill: compute plus a fixed floor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subtract-the-floor-before-taking-any-ratio-derived-from-ttft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subtract the floor before taking any ratio derived from TTFT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1122,6 +1156,40 @@ first forward pass through a compiled graph. It is prompt-length independent and
 hardware-and-server specific. On measured hardware it was 74.6 ms on an L40S and
 54.6 ms on an H100 PCIe, and it is not predictable from a spec sheet. At short
 prompts it dominates TTFT; at long prompts it amortizes away.</p>
+<h3 id="subtract-the-floor-before-taking-any-ratio-derived-from-ttft">Subtract the floor before taking any ratio derived from TTFT<a class="headerlink" href="#subtract-the-floor-before-taking-any-ratio-derived-from-ttft" title="Permanent link">&para;</a></h3>
+<p>This is the rule that has cost us the most to learn, so it is stated as a rule
+rather than left as an implication.</p>
+<p>A constant added to a measured quantity survives subtraction but not division.
+Any ratio taken from raw TTFT inherits the floor, and because the floor does
+not scale with prompt length, batch size or anything else, it distorts every
+such ratio in a way that looks like a physical finding.</p>
+<p>Three separate checks in this project have made the same mistake, and each one
+reported it as a failure of the model rather than of the arithmetic:</p>
+<ul>
+<li>The prefill validator inverted TTFT to an implied MFU without removing the
+  floor, and reported that attention accounting was wrong. It was not: the
+  floor was being attributed to compute.</li>
+<li>A check on the serial-prefill finding divided batch ratio by time ratio to
+  recover effective parallelism. At short prompts, where the floor is most of
+  TTFT, it reported parallelism of 3.2 on a clean file and declared it
+  contaminated.</li>
+<li>A trace auditor computed prefill throughput from raw TTFT and reported 1.19
+  times the card's peak FLOPS on the same clean file.</li>
+</ul>
+<p>None of these were subtle in hindsight and all three shipped. The floor is 54.6
+ms on an H100 PCIe and 74.6 ms on an L40S; at a 60 ms TTFT there is almost
+nothing left that scales, so the ratio is measuring the constant.</p>
+<p>In practice:</p>
+<div class="highlight"><pre><span></span><code>implied_mfu = prompt_compute / ((ttft_ms - floor_ms) / 1000 * peak_flops)
+</code></pre></div>
+<p>and never <code>ttft_ms</code> alone. Fit the floor first with
+<code>python -m bench.fit_overhead</code>, pass it to anything downstream, and prefer the
+longest prompt in a sweep when a ratio has to be judged, because that is where
+the floor is the smallest share of the measurement.</p>
+<p>The same caution applies to any other term that is constant with respect to
+the thing being varied. The floor is the one that has bitten repeatedly, but
+the general form is: a ratio is only interpretable once every constant term
+has been removed from both sides.</p>
 <h2 id="concurrency-serial-batch-admission">Concurrency: serial batch admission<a class="headerlink" href="#concurrency-serial-batch-admission" title="Permanent link">&para;</a></h2>
 <p>When a batch of requests arrives together, they do not each emit a first token
 when their own prefill finishes. Measured behavior is that the whole batch's
