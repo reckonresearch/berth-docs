@@ -36,8 +36,21 @@ behind untuned decode prediction.
 
 Prefill of a synchronous batch is serial: no request emits a first token until
 every prompt in the batch has been prefilled. Measured effective parallelism is
-1.09 on both cards, both under vLLM 0.6.3. Whether this transfers to another
-scheduler is open and pre-registered. This was confirmed against the sharpest objection: the
+1.09 on both cards under vLLM. A pre-registered cell on an L40S under SGLang
+returned 1.01, inside the 0.9 to 1.4 interval and far from the 1.8 falsification
+bound. Serial admission is a property of batched inference rather than of one
+scheduler, and the constant transfers as well as the form.
+
+Fitted per batch level rather than pooled, it is near 1.0 from batch 4 to 16 and
+falls to about 0.75 at batch 32 on both stacks: serial at moderate concurrency,
+partially overlapped at high. That is the leading explanation for the batch-32
+residual structure disclosed above, and it is open.
+
+The same cell found decode unchanged across stacks: effective bandwidth 0.854
+under SGLang against 0.850 under vLLM, same card, same model, agreement to
+three decimals. Bytes over bandwidth does not care which scheduler queued the
+request, and that is the strongest evidence so far that the decode term is
+physics rather than a fit. This was confirmed against the sharpest objection: the
 harness records the median first-token time across concurrent streams, and if
 each request emitted on its own prefill the implied parallelism would be near
 two. It is near one. The recorded median is the batch tail.
