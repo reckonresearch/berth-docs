@@ -1198,10 +1198,20 @@ pipeline, so the batch-tail request waits behind all of them.</p>
 <div class="highlight"><pre><span></span><code>TTFT_tail = fixed_floor + batch * single_request_prefill
 </code></pre></div>
 <p>Measured effective prefill parallelism is about 1.09 across every batch size and
-prompt length on two different cards, i.e. essentially one. Both measurements
-were taken under vLLM 0.6.3. Serial admission is a scheduling decision, so this
-is a property of that scheduler until a second serving stack is measured. That
-run is pre-registered. This is deterministic
+prompt length on two different cards under vLLM, and about 1.01 on an L40S under
+SGLang. Two independent schedulers, both essentially serial, and to within a few
+percent the same constant. The term is a property of batched inference rather
+than of one scheduler.</p>
+<p>One qualification, measured rather than assumed. Fitting <code>c_eff</code> separately at
+each batch level gives roughly 1.0 at batch 4 through 16 and falls to 0.72 to
+0.78 at batch 32 on both stacks. Prefill is serial at moderate concurrency and
+partially overlapped at high concurrency. Modelling it as one constant is why
+batch-32 residuals carry structure, which is disclosed on the validation page
+and open.</p>
+<p>Fit <code>c_eff</code> from your own traces rather than carrying this number. Subtract the
+fixed floor first: a ratio taken from raw first-token latency inherits a
+constant that does not scale, and doing so has produced a spurious 1.45 for this
+very quantity. This is deterministic
 admission, not a stochastic queue, so the wait is exact. Modeling it reduces
 first-token-latency error from roughly 65 percent to under 9 percent.</p>
 <p>This term lives in the queueing layer, not in the base estimate. The base TTFT is
