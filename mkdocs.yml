@@ -2,12 +2,12 @@
 # Build:   pip install mkdocs-material && mkdocs build
 # Deploy:  mkdocs gh-deploy   (pushes site/ to the gh-pages branch)
 # The CNAME file in this folder carries the subdomain into the built site.
-site_name: berth Documentation
+site_name: Reckon Research
 
 # Maintainer note, not a page.
 exclude_docs: |
   assets/README.md
-site_description: A placement estimator for inference engineers. Predict $/Mtok, TTFT, and TPOT before you rent the GPU.
+site_description: Adaptive placement infrastructure for AI inference. Predict what a workload costs on a given accelerator before you rent it, measure what it actually does, and move it when the answer changes.
 site_url: https://docs.reckonresearch.com/
 repo_url: https://github.com/reckonresearch/berth
 repo_name: reckonresearch/berth
@@ -60,7 +60,10 @@ nav:
   - Pilot:
       - Overview: pilot.md
       - Self-host or API: versus.md
+      - Declaring What to Watch: declaring.md
+      - Receipts and the Ledger: receipts.md
       - The Holdout Protocol: holdout.md
+      - Internals: pilot-internals.md
   - Worked Examples:
       - Overview: examples/index.md
       - Reproduce the Placement Premium: examples/premium-walkthrough.md

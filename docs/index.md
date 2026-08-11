@@ -1,71 +1,129 @@
-# berth is a placement estimator for inference engineers
+# Adaptive placement infrastructure for AI inference
 
-berth predicts what an LLM inference workload will cost and how fast it will run,
-on a given accelerator, under a given latency target, before you rent the GPU.
-You describe the workload. berth returns dollars per million tokens, time to
-first token, and time per output token, plus the placement premium: how much you
-would save by moving to the cheapest silicon that still meets your p99.
+**To measure what compute produces, and move every workload to where it
+produces most.**
 
-It is a closed-form roofline, not a learned black box. Every number is arithmetic
-you can audit by hand, and every prediction ships with the physical term that
-produced it. berth is open source (Apache-2.0) and runs in your environment.
-Nothing leaves your machine.
+Compute is sold by the hour. It is consumed as work delivered under a
+deadline. No standard unit connects the two.
 
-Here is the division of labor in practice:
+So there is nothing to be efficient *per*. Tokens per second can double while
+a service delivers nothing sellable, because a token that arrives after its
+deadline is not a token. Dollars per GPU-hour is the price of the machine, not
+the cost of the work.
 
-| You focus on | You write | berth handles |
-|---|---|---|
-| Your workload: model, batch, prompt and output lengths, SLO | A short Python call or one CLI line, on your laptop | The roofline: compute-bound and memory-bound decode, prefill with its fixed floor, serial batch admission |
-| Which placements to compare | The silicon and provider list to evaluate | $/Mtok, TTFT, TPOT per placement, and the premium between them |
-| The decision | Nothing you cannot inspect | Auditable math, every term tagged and checkable |
+We built the unit, the instrument that measures it, and the agent that acts on
+it.
 
-## Why this exists
+---
 
-Compute is priced by the GPU-hour but consumed as useful work under a latency
-constraint, and no standard unit bridges the two. A GPU-hour is a list price. The
-cost of a token delivered within its SLO is what you actually buy, and it varies
-by multiples across accelerators that quote similar hourly rates. berth measures
-that gap so placement becomes a decision backed by physics rather than habit.
+## The unit
 
-The result is often counterintuitive. On measured hardware, an L40S delivers
-Llama-3-8B decode tokens 1.6x cheaper per token than an H100 PCIe at matched
-concurrency: the H100 decodes about twice as fast but costs about three times as
-much per hour. The premier chip is the wrong chip for that workload.
+**One output token delivered inside its latency target and above a declared
+quality floor.** A served token.
 
-Read that with its condition attached. It is a cost result at matched batch, not
-a result at matched latency. Declare a tight enough per-token deadline and the
-L40S stops being feasible at all, at which point its cost per unit of compliant
-work is not low, it is undefined. Which card wins is a function of your SLO, and
-that is the whole reason a placement estimator exists rather than a league
-table.
+Everything here measures in that unit. The specification is published and
+anyone may use it, including people who compete with us. A unit nobody else
+may use is not a unit.
 
-## What berth is, precisely
+## Three tools
 
-berth is an ESTIMATOR. It predicts from a model; it does not require the workload
-to be running. The measurement harness that validates it (see Validation) is a
-separate component: it observes real hardware to check the estimator. Keep the
-distinction in mind. You use the estimator; the harness is how we earned your
-trust in it.
+| | |
+| --- | --- |
+| **berth** | predicts what a workload costs and how fast it runs on a given accelerator, before you rent it |
+| **sounding** | measures the real thing and checks the prediction |
+| **pilot** | watches for change, re-decides, and proves what the change saved |
 
-## A quick look at functionality
+All open source, Apache-2.0. All reproducible from published traces.
 
-berth's core is a handful of calls:
+```bash
+pip install berth-placement
+berth place --workload-class voice --model llama3-8b \
+    --incumbent h100-pcie --slo-ms 800
+```
 
-- `estimate(sig, silicon, price_hr)`: return cost_per_mtok, TTFT, TPOT for one placement, plus its placement_premium
-- `PlacementClient.place(sig, policy)`: choose the cheapest placement meeting an SLO
-- `PlacementClient.estimate(sig)`: score every candidate placement, filter on feasibility
+---
+
+## Adaptive placement
+
+Deciding which chip, which provider, and at which price a model runs under a
+stated p99, then moving it as prices, capacity, and traffic shift.
+
+**It is workload-conditional.** The answer depends on your token lengths and
+your concurrency, not on a benchmark average. The right chip can invert inside
+a single workload as concurrency changes.
+
+**It is bounded by your service level.** A placement that misses your p99 has
+no price, not a low one. That is the distinction a price sheet cannot express,
+and the reason a league table is the wrong object.
+
+**It constantly adapts.** Prices move, models ship, capacity changes. So does
+the answer, and most teams decide once and never look again.
+
+---
+
+## What we found
+
+Fit the decode constant on one accelerator, then predict a different
+accelerator it has never seen, on different memory technology.
+
+**Worst held-out fold: 9.5 percent, against a 15 percent gate published before
+the first run.**
+
+The residual is the real spread between the two cards. One constant across
+both costs about nine percent, which is the price of generality and is stated
+rather than fitted away.
+
+Two more from the same corpus:
+
+**Prefill admission is serial, and not as a quirk of one server.** Effective
+parallelism 1.09 under vLLM and 1.01 under SGLang. Modelling that one term
+drops first-token error from roughly 65 percent to under 9.
+
+**Decode is stack-independent to three decimals.** 0.854 under SGLang against
+0.850 under vLLM, same card, same model.
+
+Every trace is downloadable. Every number is reproducible.
+
+[The full validation record](validation-p0.md)
+
+---
+
+## Arithmetic, not a black box
+
+A closed-form roofline plus a queueing term. Roughly a page of maths, no
+learned components. Every prediction ships with the physical term that
+produced it and a label saying whether that term rests on a measurement or a
+datasheet.
+
+It runs in your environment. Nothing leaves your machine.
+
+When it is wrong, [we publish that
+too](https://github.com/reckonresearch/berth/blob/main/DEFECTS.md): eleven
+instrument failures, what caused each, and the test that fails if it returns.
+A measurement tool that has never been caught lying has not been used hard
+enough.
+
+---
 
 ## Start here
 
-- [Get Started](quickstart.md): install and run your first estimate in two minutes
-- [Tutorials](tutorials/index.md): four runnable programs, 101 through 401
-- [The Physics](the-physics.md): the roofline, term by term, so you can audit it
-- [Validation (P0)](validation-p0.md): how berth's predictions were checked against real hardware
-- [The Placement Premium](placement-premium.md): the headline quantity and how to read it
-- [Worked Examples](examples/index.md): end-to-end, reproducible from published data
-- [Verify and Contribute](verify-and-contribute.md): check the estimate on your own silicon
-- [API Reference](api-reference.md)
+**New to this** · [Get started](quickstart.md) in two minutes ·
+[Tutorials](tutorials/index.md), four runnable programs
 
-berth is a Python library with a command-line front end. `berth estimate`,
-`berth premium` and `berth list` wrap the same public API, so the fastest path
-to a number needs no Python.
+**Evaluating it** · [The physics](the-physics.md), term by term ·
+[Validation](validation-p0.md), how it was checked against hardware ·
+[The placement premium](placement-premium.md)
+
+**Deciding whether to self-host** · [Self-host or API](versus.md), both on one
+axis
+
+**Running it continuously** · [pilot](pilot.md) ·
+[Declaring what to watch](declaring.md) ·
+[The Holdout Protocol](holdout.md), how a saving is proven
+
+**Contributing** · [Verify and contribute](verify-and-contribute.md) a cell we
+have not measured
+
+---
+
+Built by [Reckon Research](https://reckonresearch.com).
