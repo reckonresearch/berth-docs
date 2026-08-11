@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+<!--
+  Hide the site title in the header bar.
+
+  Material renders the logo and then site_name as text beside it. With a full
+  wordmark that prints the company name twice in one bar. Overriding the logo
+  partial does not fix it, because the title lives in header.html, not
+  logo.html.
+
+  Done in CSS rather than by emptying site_name: an empty title would also
+  empty the browser tab and every search-result heading, which costs far more
+  than the duplicate it removes. The sidebar heading is left alone; that one is
+  the site name doing its job.
+-->
+{% block extrahead %}
+  {{ super() }}
+  <style>
+    .md-header__title .md-ellipsis { display: none; }
+    .md-header__button.md-logo img { height: 1.6rem; width: auto; }
+  </style>
+{% endblock %}
