@@ -1,6 +1,10 @@
 # sounding
 
-**The harness.** Measures the real thing and checks the prediction.
+**The harness in adaptive placement.** Measures the real thing and checks the
+prediction.
+
+Adaptive placement is only as good as the measurements under it. sounding is
+where those come from, and it is how anyone can check ours.
 
 berth predicts. sounding drives a live endpoint, records what actually
 happened, and produces the traces that say whether the prediction was right.

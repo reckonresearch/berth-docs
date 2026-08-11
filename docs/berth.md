@@ -1,7 +1,10 @@
 # berth
 
-**The estimator.** Predicts what a workload costs and how fast it runs on a
-given accelerator, before you rent it.
+**The estimator in adaptive placement.** Predicts what a workload costs and
+how fast it runs on a given accelerator, before you rent it.
+
+Adaptive placement needs a number before it can decide anything. berth is
+where that number comes from.
 
 ```bash
 pip install berth-placement

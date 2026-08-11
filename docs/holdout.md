@@ -2,6 +2,9 @@
 
 **Version 0.1, draft.** Published under CC BY 4.0.
 
+The settlement standard for adaptive placement: how a saving from moving a
+workload is proven rather than claimed.
+
 A method for establishing what a workload *would have* cost, so a change in
 placement can be billed on the difference.
 

@@ -1,5 +1,7 @@
 # pilot internals
 
+How the adaptive placement agent works, for anyone reading the source.
+
 The loop, for anyone reading the source or running it themselves. Everything
 here is in `berth/` and Apache-2.0.
 

@@ -1,5 +1,8 @@
 # Self-host or API
 
+**The first adaptive placement decision.** Before which chip and which
+provider comes whether to run it yourself at all.
+
 Most teams calling a hosted endpoint have never computed what the same work
 would cost them, because the number does not exist. What an API charges per
 million tokens is published. What a rented GPU would deliver under your

@@ -1,5 +1,7 @@
 # Receipts and the ledger
 
+What adaptive placement has been worth, and what it has not.
+
 Two different questions. A **receipt** settles one measurement period under the
 [holdout protocol](holdout.md). The **ledger** says what everything so far has
 been worth.

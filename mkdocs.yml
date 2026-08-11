@@ -18,7 +18,10 @@ theme:
   # Copy these two from the site repo before building:
   #   cp <site-repo>/assets/reckon-mark-white.png docs/assets/
   #   cp <site-repo>/favicon.ico                  docs/assets/
-  logo: assets/reckon-mark-white.png
+  # Full lockup rather than the mark alone. site_name still renders in the
+  # browser tab and in search results; suppressing it in the header removes
+  # the duplicate that appeared once the nav gained a Reckon Research entry.
+  logo: assets/reckon-wordmark-white.png
   favicon: assets/favicon.ico
   # Without this the repo link renders a generic git glyph, not the octocat.
   icon:
@@ -49,18 +52,18 @@ theme:
 
 nav:
   - Reckon Research: index.md
-  - berth:
+  - berth, the estimator:
       - Overview: berth.md
       - Get Started: quickstart.md
       - Silicon and Models: silicon-and-models.md
       - The Physics: the-physics.md
       - The Placement Premium: placement-premium.md
       - API Reference: api-reference.md
-  - sounding:
+  - sounding, the harness:
       - Overview: sounding.md
       - Validation (P0): validation-p0.md
       - Verify and Contribute: verify-and-contribute.md
-  - pilot:
+  - pilot, the agent:
       - Overview: pilot.md
       - Declaring What to Watch: declaring.md
       - Receipts and the Ledger: receipts.md

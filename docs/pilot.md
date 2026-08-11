@@ -1,9 +1,11 @@
 # pilot
 
-**The agent.** Watches for change, adapts the placement, and proves what the
-change saved.
+**The adaptive placement agent.** Watches for change, adapts the placement,
+and proves what the change saved.
 
-This is the part of adaptive placement that does the adapting.
+berth decides where a workload should run. sounding checks that the decision
+was right. pilot is the part that keeps deciding, because the answer does not
+hold still.
 
 A placement is not a decision, it is a position that decays. A model version
 ships and the byte profile changes. A provider moves a rate. A cell lands in

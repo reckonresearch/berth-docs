@@ -1,5 +1,7 @@
 # Declaring what to watch
 
+What the adaptive placement agent may watch, and which paths it may write.
+
 `.berth/classes.yaml`, in **your** repository. pilot reads it and writes
 nothing outside the paths it names.
 
