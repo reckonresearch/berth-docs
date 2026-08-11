@@ -803,6 +803,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-static-placement-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why static placement fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-does" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1551,6 +1562,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-static-placement-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why static placement fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-does" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1659,31 +1681,45 @@
 
 
 <h1 id="pilot">pilot<a class="headerlink" href="#pilot" title="Permanent link">&para;</a></h1>
-<p><strong>The agent.</strong> Watches for change, re-decides, and proves what the change
-saved.</p>
+<p><strong>The agent.</strong> Watches for change, adapts the placement, and proves what the
+change saved.</p>
+<p>This is the part of adaptive placement that does the adapting.</p>
 <p>A placement is not a decision, it is a position that decays. A model version
 ships and the byte profile changes. A provider moves a rate. A cell lands in
 the corpus and a prior becomes a measurement. The answer that was right last
 month is not right this month, and nobody checks, because checking means
 re-measuring and nothing says when it is worth doing.</p>
-<p>pilot does the checking, and acts on it.</p>
+<p>pilot does the checking, and adapts.</p>
 <div class="admonition note">
 <p class="admonition-title">On the name</p>
 <p>A harbour pilot boards a vessel, guides it to berth, owns neither the ship
 nor the port, and is paid by the vessel. That is the position exactly: we
 route on behalf of the buyer, to any provider, and no provider pays us.</p>
 </div>
+<h2 id="why-static-placement-fails">Why static placement fails<a class="headerlink" href="#why-static-placement-fails" title="Permanent link">&para;</a></h2>
+<p>Almost every team decides once. A benchmark, a spec sheet, a conversation, and
+then the configuration stays until something breaks.</p>
+<p>Meanwhile the inputs move continuously. Model versions ship monthly or faster.
+Provider rates change. Serving stacks cut releases, and a stack upgrade alone
+has been measured at over twice the throughput on identical hardware. Traffic
+shape shifts as a product grows.</p>
+<p><strong>A decision made once against inputs that never stop moving is wrong within
+weeks, and stays wrong silently.</strong> That is the gap adaptive placement closes,
+and pilot is the part that closes it.</p>
 <h2 id="what-it-does">What it does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
 <p><strong>Watches.</strong> Model registries, serving-stack releases, provider prices, and
 the corpus. Four sources, polled on a schedule.</p>
-<p><strong>Re-decides.</strong> When something moves, it re-runs the placement decision
-against the new inputs.</p>
+<p><strong>Adapts.</strong> When something moves, it re-runs the placement decision against
+the new inputs. Not on a review cycle and not when somebody remembers: when
+the input changes.</p>
 <p><strong>Proposes.</strong> When the answer changes by enough to matter, it opens a pull
 request against your deployment configuration with the diff and the evidence
-attached.</p>
+attached. The workload moves when you merge it.</p>
 <p><strong>Proves.</strong> Under the <a href="../holdout/">Holdout Protocol</a>, a declared slice of
 traffic stays on the old placement so the saving can be measured rather than
 claimed.</p>
+<p>Then it starts again. A placement that was adapted last month is a placement
+that can decay again, and the loop has no end state.</p>
 <h2 id="what-it-never-does">What it never does<a class="headerlink" href="#what-it-never-does" title="Permanent link">&para;</a></h2>
 <p><strong>It never touches a request.</strong> No proxy, no gateway, no traffic. Your own
 infrastructure moves the workload; pilot decides where and proves what the

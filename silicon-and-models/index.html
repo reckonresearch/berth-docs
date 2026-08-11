@@ -1554,6 +1554,13 @@
 peak compute, memory bandwidth, memory capacity, and a list price. The two cards
 below marked MEASURED have been validated against real hardware traces; the rest
 carry spec-sheet priors and are labeled accordingly.</p>
+<p>Six cells are measured today across three memory technologies and two vendors:
+L40S under vLLM and again under SGLang, H100 PCIe, H100 SXM at bf16 and at fp8,
+A100 80GB with a mixture-of-experts model, and MI300X. That last one is the
+first non-NVIDIA cell in the corpus.</p>
+<p>A cell is one accelerator running one model under one serving stack at one
+precision. A card marked MEASURED has at least one cell; it does not mean every
+model on it has been measured, and the CLI says which on every line.</p>
 <table>
 <thead>
 <tr>
@@ -1588,7 +1595,7 @@ carry spec-sheet priors and are labeled accordingly.</p>
 <td>989</td>
 <td>3.35</td>
 <td>80 GB</td>
-<td>prior</td>
+<td>MEASURED</td>
 </tr>
 <tr>
 <td><code>h200-sxm</code></td>
@@ -1604,7 +1611,7 @@ carry spec-sheet priors and are labeled accordingly.</p>
 <td>312</td>
 <td>2.00</td>
 <td>80 GB</td>
-<td>prior</td>
+<td>MEASURED</td>
 </tr>
 <tr>
 <td><code>mi300x</code></td>
@@ -1612,7 +1619,7 @@ carry spec-sheet priors and are labeled accordingly.</p>
 <td>1307</td>
 <td>5.30</td>
 <td>192 GB</td>
-<td>prior</td>
+<td>MEASURED</td>
 </tr>
 <tr>
 <td><code>tpu-v6e</code></td>
@@ -1631,6 +1638,22 @@ carry spec-sheet priors and are labeled accordingly.</p>
 <td>prior</td>
 </tr>
 <tr>
+<td><code>trn1</code></td>
+<td>AWS Trainium</td>
+<td>190</td>
+<td>0.820</td>
+<td>32 GB</td>
+<td>prior</td>
+</tr>
+<tr>
+<td><code>trn2</code></td>
+<td>AWS Trainium2</td>
+<td>650</td>
+<td>2.90</td>
+<td>96 GB</td>
+<td>prior</td>
+</tr>
+<tr>
 <td><code>cpu-spr</code></td>
 <td>Intel Sapphire Rapids</td>
 <td>8</td>
@@ -1644,7 +1667,7 @@ carry spec-sheet priors and are labeled accordingly.</p>
 those parts are honest forecasts, not measurements, and berth labels them so.</p>
 <p>Two things to know about the peak compute column. It carries the vendors' 2:4
 structured-sparsity ratings, which are roughly twice the dense bf16 figure, and
-the microbenchmarked dense numbers on the two measured cards came in far lower:
+the microbenchmarked dense numbers on the measured cards came in far lower:
 211 TFLOPS on the L40S against a rated 362, and 388 on the H100 PCIe against 756.
 On measured silicon this is absorbed by the fitted MFU, so it does not move the
 published results. On prior silicon there is no fit to absorb it, so a
