@@ -1,7 +1,9 @@
 # pilot
 
-**The agent.** Watches for change, re-decides, and proves what the change
-saved.
+**The agent.** Watches for change, adapts the placement, and proves what the
+change saved.
+
+This is the part of adaptive placement that does the adapting.
 
 A placement is not a decision, it is a position that decays. A model version
 ships and the byte profile changes. A provider moves a rate. A cell lands in
@@ -9,28 +11,46 @@ the corpus and a prior becomes a measurement. The answer that was right last
 month is not right this month, and nobody checks, because checking means
 re-measuring and nothing says when it is worth doing.
 
-pilot does the checking, and acts on it.
+pilot does the checking, and adapts.
 
 !!! note "On the name"
     A harbour pilot boards a vessel, guides it to berth, owns neither the ship
     nor the port, and is paid by the vessel. That is the position exactly: we
     route on behalf of the buyer, to any provider, and no provider pays us.
 
+## Why static placement fails
+
+Almost every team decides once. A benchmark, a spec sheet, a conversation, and
+then the configuration stays until something breaks.
+
+Meanwhile the inputs move continuously. Model versions ship monthly or faster.
+Provider rates change. Serving stacks cut releases, and a stack upgrade alone
+has been measured at over twice the throughput on identical hardware. Traffic
+shape shifts as a product grows.
+
+**A decision made once against inputs that never stop moving is wrong within
+weeks, and stays wrong silently.** That is the gap adaptive placement closes,
+and pilot is the part that closes it.
+
 ## What it does
 
 **Watches.** Model registries, serving-stack releases, provider prices, and
 the corpus. Four sources, polled on a schedule.
 
-**Re-decides.** When something moves, it re-runs the placement decision
-against the new inputs.
+**Adapts.** When something moves, it re-runs the placement decision against
+the new inputs. Not on a review cycle and not when somebody remembers: when
+the input changes.
 
 **Proposes.** When the answer changes by enough to matter, it opens a pull
 request against your deployment configuration with the diff and the evidence
-attached.
+attached. The workload moves when you merge it.
 
 **Proves.** Under the [Holdout Protocol](holdout.md), a declared slice of
 traffic stays on the old placement so the saving can be measured rather than
 claimed.
+
+Then it starts again. A placement that was adapted last month is a placement
+that can decay again, and the loop has no end state.
 
 ## What it never does
 
