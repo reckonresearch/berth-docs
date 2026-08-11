@@ -57,6 +57,10 @@ nav:
       - Validation (P0): validation-p0.md
       - Verify and Contribute: verify-and-contribute.md
       - API Reference: api-reference.md
+  - Pilot:
+      - Overview: pilot.md
+      - Self-host or API: versus.md
+      - The Holdout Protocol: holdout.md
   - Worked Examples:
       - Overview: examples/index.md
       - Reproduce the Placement Premium: examples/premium-walkthrough.md
