@@ -10,25 +10,31 @@
       
       
       
+        <link rel="canonical" href="https://docs.reckonresearch.com/pilot-internals/">
       
+      
+        <link rel="prev" href="../holdout/">
+      
+      
+        <link rel="next" href="../examples/">
       
       
         
       
       
-      <link rel="icon" href="/assets/favicon.ico">
+      <link rel="icon" href="../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Reckon Research</title>
+        <title>Internals - Reckon Research</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -47,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -71,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#pilot-internals" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -83,9 +94,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="Reckon Research" class="md-header__button md-logo" aria-label="Reckon Research" data-md-component="logo">
+    <a href=".." title="Reckon Research" class="md-header__button md-logo" aria-label="Reckon Research" data-md-component="logo">
       
-  <img src="/assets/reckon-mark-white.png" alt="logo">
+  <img src="../assets/reckon-mark-white.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -102,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Internals
             
           </span>
         </div>
@@ -220,9 +231,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="Reckon Research" class="md-nav__button md-logo" aria-label="Reckon Research" data-md-component="logo">
+    <a href=".." title="Reckon Research" class="md-nav__button md-logo" aria-label="Reckon Research" data-md-component="logo">
       
-  <img src="/assets/reckon-mark-white.png" alt="logo">
+  <img src="../assets/reckon-mark-white.png" alt="logo">
 
     </a>
     Reckon Research
@@ -286,7 +297,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/." class="md-nav__link ">
+            <a href=".." class="md-nav__link ">
               
   
   
@@ -330,7 +341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/quickstart/" class="md-nav__link">
+      <a href="../quickstart/" class="md-nav__link">
         
   
   
@@ -358,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/silicon-and-models/" class="md-nav__link">
+      <a href="../silicon-and-models/" class="md-nav__link">
         
   
   
@@ -386,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/the-physics/" class="md-nav__link">
+      <a href="../the-physics/" class="md-nav__link">
         
   
   
@@ -414,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/placement-premium/" class="md-nav__link">
+      <a href="../placement-premium/" class="md-nav__link">
         
   
   
@@ -442,7 +453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/validation-p0/" class="md-nav__link">
+      <a href="../validation-p0/" class="md-nav__link">
         
   
   
@@ -470,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/verify-and-contribute/" class="md-nav__link">
+      <a href="../verify-and-contribute/" class="md-nav__link">
         
   
   
@@ -498,7 +509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/api-reference/" class="md-nav__link">
+      <a href="../api-reference/" class="md-nav__link">
         
   
   
@@ -530,8 +541,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -556,11 +569,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -581,7 +594,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -599,7 +612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/pilot/" class="md-nav__link">
+      <a href="../pilot/" class="md-nav__link">
         
   
   
@@ -627,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/versus/" class="md-nav__link">
+      <a href="../versus/" class="md-nav__link">
         
   
   
@@ -655,7 +668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/declaring/" class="md-nav__link">
+      <a href="../declaring/" class="md-nav__link">
         
   
   
@@ -683,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/receipts/" class="md-nav__link">
+      <a href="../receipts/" class="md-nav__link">
         
   
   
@@ -711,7 +724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/holdout/" class="md-nav__link">
+      <a href="../holdout/" class="md-nav__link">
         
   
   
@@ -736,10 +749,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/pilot-internals/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -755,6 +795,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#berthwatch-noticing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.watch: noticing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthagent-deciding-whether-to-speak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.agent: deciding whether to speak
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthgithub-the-smallest-surface-that-opens-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.github: the smallest surface that opens a pull request
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthstatus-one-place-to-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.status: one place to look
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthquantities-types-where-two-numbers-share-a-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.quantities: types where two numbers share a shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -799,7 +914,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/examples/" class="md-nav__link ">
+            <a href="../examples/" class="md-nav__link ">
               
   
   
@@ -843,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/examples/premium-walkthrough/" class="md-nav__link">
+      <a href="../examples/premium-walkthrough/" class="md-nav__link">
         
   
   
@@ -909,7 +1024,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/tutorials/" class="md-nav__link ">
+            <a href="../tutorials/" class="md-nav__link ">
               
   
   
@@ -953,7 +1068,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tutorials/101-hello-berth/" class="md-nav__link">
+      <a href="../tutorials/101-hello-berth/" class="md-nav__link">
         
   
   
@@ -981,7 +1096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tutorials/201-policies-and-slos/" class="md-nav__link">
+      <a href="../tutorials/201-policies-and-slos/" class="md-nav__link">
         
   
   
@@ -1009,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tutorials/301-calibrate-from-traces/" class="md-nav__link">
+      <a href="../tutorials/301-calibrate-from-traces/" class="md-nav__link">
         
   
   
@@ -1037,7 +1152,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tutorials/401-tail-aware-sizing/" class="md-nav__link">
+      <a href="../tutorials/401-tail-aware-sizing/" class="md-nav__link">
         
   
   
@@ -1072,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/changelog/" class="md-nav__link">
+      <a href="../changelog/" class="md-nav__link">
         
   
   
@@ -1099,7 +1214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/support/" class="md-nav__link">
+      <a href="../support/" class="md-nav__link">
         
   
   
@@ -1136,6 +1251,71 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#berthwatch-noticing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.watch: noticing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthagent-deciding-whether-to-speak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.agent: deciding whether to speak
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthgithub-the-smallest-surface-that-opens-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.github: the smallest surface that opens a pull request
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthstatus-one-place-to-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.status: one place to look
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#berthquantities-types-where-two-numbers-share-a-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        berth.quantities: types where two numbers share a shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1148,8 +1328,130 @@
               
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="pilot-internals">Pilot internals<a class="headerlink" href="#pilot-internals" title="Permanent link">&para;</a></h1>
+<p>The loop, for anyone reading the source or running it themselves. Everything
+here is in <code>berth/</code> and Apache-2.0.</p>
+<h2 id="berthwatch-noticing"><code>berth.watch</code>: noticing<a class="headerlink" href="#berthwatch-noticing" title="Permanent link">&para;</a></h2>
+<p>Four sources, each a pure function of a fetched payload and stored state, so
+the network layer can be swapped for a fixture and the logic tested without
+polling anything.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What moves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model registries</td>
+<td>the repository commit, not the timestamp. A README edit is not a placement event</td>
+</tr>
+<tr>
+<td>Serving stacks</td>
+<td>a release tag. vLLM 0.5.5 to 0.25 was worth 1.48x at batch 1 and 2.70x at batch 32 on one card</td>
+</tr>
+<tr>
+<td>Provider prices</td>
+<td>beyond an epsilon. Rates move by fractions of a percent constantly and none of it changes a placement</td>
+</tr>
+<tr>
+<td>Corpus cells</td>
+<td>a prior becoming a measurement, the only trigger where the answer changes without anything in your world changing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Three properties worth knowing.</strong> The first sight of a source fires nothing,
+because we do not yet know whether it changed. An unreachable source is not a
+change, so an outage does not fire the agent. And the detector polls once per
+pass rather than once per class, since twenty classes watching one model would
+hit a registry twenty times.</p>
+<p><strong>Unreachable is recorded, not swallowed.</strong> A source that has never succeeded
+must not look like one that succeeded and did not change. The first shadow
+deployment of this system had every remote source dead behind a certificate
+failure and the output read as a normal quiet pass, which is the worst failure
+a monitor has.</p>
+<p>The price source is a callable, so point it at your own negotiated rates. Your
+contracted rate decides your placement and it is usually not the published one.</p>
+<h2 id="berthagent-deciding-whether-to-speak"><code>berth.agent</code>: deciding whether to speak<a class="headerlink" href="#berthagent-deciding-whether-to-speak" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">berth.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentState</span><span class="p">,</span> <span class="n">run</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">resolve_decision</span><span class="p">,</span> <span class="n">detect_triggers</span><span class="p">,</span>
+             <span class="n">state</span><span class="o">=</span><span class="n">AgentState</span><span class="p">(),</span> <span class="n">shadow</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>A trigger becomes a proposal only if the answer changed <strong>and</strong> the margin
+clears the hurdle:</p>
+<div class="highlight"><pre><span></span><code>hurdle = confidence band + switching cost
+</code></pre></div>
+<p>Two terms because they fail differently. A gain inside the band might not
+exist. A gain smaller than the switching cost exists and is not worth
+collecting. Without the second the loop is an oscillator waiting for a price
+feed: two placements a few percent apart trade the lead every time a rate card
+moves, and each swap costs real money while the estimate was never wrong.</p>
+<p><strong>State stops it repeating.</strong> The same proposal is not opened twice. A
+rejection suppresses it for ninety days. A new proposal supersedes an open one,
+so nobody holds two pull requests pointing different ways. Several triggers
+reaching one conclusion in a pass produce one proposal.</p>
+<p><strong>Two kill criteria.</strong> Proposal rate below one in four means the trigger set is
+wrong. Merge rate consistently low means the arithmetic is right and nobody
+wants it, which is a product problem rather than a threshold one.</p>
+<h2 id="berthgithub-the-smallest-surface-that-opens-a-pull-request"><code>berth.github</code>: the smallest surface that opens a pull request<a class="headerlink" href="#berthgithub-the-smallest-surface-that-opens-a-pull-request" title="Permanent link">&para;</a></h2>
+<p>Read a file, write a branch, open a pull request. It <strong>cannot</strong> merge, cannot
+write to a default branch, and cannot touch an undeclared path. Enforced in
+code rather than in a token scope: a scope is a promise about configuration
+and this is a promise about code. <code>merge()</code> exists solely to raise.</p>
+<p>An edit matching zero lines or two is refused rather than guessed. Zero means
+the estimate is stale and re-estimating is correct; two is ambiguous. An agent
+that guesses at a deployment file has its access revoked once.</p>
+<p>See <a href="https://github.com/reckonresearch/berth/tree/main/contrib/gateway">gateway templates</a>
+for running the holdout assignment at Envoy, NGINX, ALB or Istio, which needs
+no application code.</p>
+<h2 id="berthstatus-one-place-to-look"><code>berth.status</code>: one place to look<a class="headerlink" href="#berthstatus-one-place-to-look" title="Permanent link">&para;</a></h2>
+<p><code>.berth/STATUS.md</code>, rewritten every pass into your repository. Every class,
+what it holds, what the estimator recommends <strong>now</strong> rather than when the
+proposal opened, open proposals linked, settled periods, and when each source
+was last polled.</p>
+<p>A file rather than a dashboard: version controlled, so its history is the
+history of the account; renders wherever the repository is browsed; no login;
+and deleting it is how you turn it off, which the page says on itself.</p>
+<p>A recommendation resting on unmeasured silicon is lifted out of the table into
+its own callout, because a table column is where it would be missed.</p>
+<h2 id="berthquantities-types-where-two-numbers-share-a-shape"><code>berth.quantities</code>: types where two numbers share a shape<a class="headerlink" href="#berthquantities-types-where-two-numbers-share-a-shape" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">berth.quantities</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ceiling</span>
+<span class="n">peak</span> <span class="o">=</span> <span class="n">Ceiling</span><span class="o">.</span><span class="n">datasheet</span><span class="p">(</span><span class="s2">&quot;h100-pcie&quot;</span><span class="p">,</span> <span class="n">bandwidth_tbs</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">peak</span><span class="o">.</span><span class="n">efficiency_of</span><span class="p">(</span><span class="n">measured_tbs</span><span class="o">=</span><span class="mf">1.7</span><span class="p">)</span>          <span class="c1"># 0.85</span>
+</code></pre></div>
+<p>Two instrument defects in this project were a float handed to a function
+expecting a different float. A microbenchmark passed where a datasheet peak
+was expected reported a clean file as contaminated. An efficiency fitted on one
+card's timings while dividing by another card's bandwidth reported 109.5
+percent error with a fitted value of 1.761.</p>
+<p><code>Ceiling</code> carries its device and its source. <code>efficiency_of</code> refuses a
+microbenchmark denominator and refuses a measurement from another device.
+Carrying a constant between cards is a separate named operation,
+<code>transfer_efficiency</code>, which refuses any value that is not a fraction of a
+peak.</p>
+<p>Both defects were caught only because the output was absurd. At 0.62 instead
+of 1.761 the second would have been published as a finding.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -1196,10 +1498,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/", "features": ["navigation.sections", "navigation.indexes", "navigation.tracking", "navigation.top", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.indexes", "navigation.tracking", "navigation.top", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
