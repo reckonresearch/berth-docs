@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A placement estimator for inference engineers. Predict $/Mtok, TTFT, and TPOT before you rent the GPU.">
+        <meta name="description" content="Adaptive placement infrastructure for AI inference. Predict what a workload costs on a given accelerator before you rent it, measure what it actually does, and move it when the answer changes.">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Overview - berth Documentation</title>
+        <title>Overview - Reckon Research</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#berth-is-a-placement-estimator-for-inference-engineers" class="md-skip">
+        <a href="#adaptive-placement-infrastructure-for-ai-inference" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="berth Documentation" class="md-header__button md-logo" aria-label="berth Documentation" data-md-component="logo">
+    <a href="." title="Reckon Research" class="md-header__button md-logo" aria-label="Reckon Research" data-md-component="logo">
       
   <img src="assets/reckon-mark-white.png" alt="logo">
 
@@ -105,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            berth Documentation
+            Reckon Research
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -229,12 +229,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="berth Documentation" class="md-nav__button md-logo" aria-label="berth Documentation" data-md-component="logo">
+    <a href="." title="Reckon Research" class="md-nav__button md-logo" aria-label="Reckon Research" data-md-component="logo">
       
   <img src="assets/reckon-mark-white.png" alt="logo">
 
     </a>
-    berth Documentation
+    Reckon Research
   </label>
   
     <div class="md-nav__source">
@@ -552,6 +552,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
     
@@ -660,6 +666,62 @@
   
   
     <li class="md-nav__item">
+      <a href="declaring.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Declaring What to Watch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="receipts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Receipts and the Ledger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="holdout/" class="md-nav__link">
         
   
@@ -668,6 +730,34 @@
     
   
     The Holdout Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pilot-internals.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
   
 
     
@@ -1067,10 +1157,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-this-exists" class="md-nav__link">
+  <a href="#the-unit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why this exists
+        The unit
       
     </span>
   </a>
@@ -1078,10 +1168,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-berth-is-precisely" class="md-nav__link">
+  <a href="#three-tools" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What berth is, precisely
+        Three tools
       
     </span>
   </a>
@@ -1089,10 +1179,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-quick-look-at-functionality" class="md-nav__link">
+  <a href="#adaptive-placement" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A quick look at functionality
+        Adaptive placement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-we-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we found
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arithmetic-not-a-black-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arithmetic, not a black box
       
     </span>
   </a>
@@ -1130,86 +1242,109 @@
   
 
 
-<h1 id="berth-is-a-placement-estimator-for-inference-engineers">berth is a placement estimator for inference engineers<a class="headerlink" href="#berth-is-a-placement-estimator-for-inference-engineers" title="Permanent link">&para;</a></h1>
-<p>berth predicts what an LLM inference workload will cost and how fast it will run,
-on a given accelerator, under a given latency target, before you rent the GPU.
-You describe the workload. berth returns dollars per million tokens, time to
-first token, and time per output token, plus the placement premium: how much you
-would save by moving to the cheapest silicon that still meets your p99.</p>
-<p>It is a closed-form roofline, not a learned black box. Every number is arithmetic
-you can audit by hand, and every prediction ships with the physical term that
-produced it. berth is open source (Apache-2.0) and runs in your environment.
-Nothing leaves your machine.</p>
-<p>Here is the division of labor in practice:</p>
+<h1 id="adaptive-placement-infrastructure-for-ai-inference">Adaptive placement infrastructure for AI inference<a class="headerlink" href="#adaptive-placement-infrastructure-for-ai-inference" title="Permanent link">&para;</a></h1>
+<p><strong>To measure what compute produces, and move every workload to where it
+produces most.</strong></p>
+<p>Compute is sold by the hour. It is consumed as work delivered under a
+deadline. No standard unit connects the two.</p>
+<p>So there is nothing to be efficient <em>per</em>. Tokens per second can double while
+a service delivers nothing sellable, because a token that arrives after its
+deadline is not a token. Dollars per GPU-hour is the price of the machine, not
+the cost of the work.</p>
+<p>We built the unit, the instrument that measures it, and the agent that acts on
+it.</p>
+<hr />
+<h2 id="the-unit">The unit<a class="headerlink" href="#the-unit" title="Permanent link">&para;</a></h2>
+<p><strong>One output token delivered inside its latency target and above a declared
+quality floor.</strong> A served token.</p>
+<p>Everything here measures in that unit. The specification is published and
+anyone may use it, including people who compete with us. A unit nobody else
+may use is not a unit.</p>
+<h2 id="three-tools">Three tools<a class="headerlink" href="#three-tools" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>You focus on</th>
-<th>You write</th>
-<th>berth handles</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Your workload: model, batch, prompt and output lengths, SLO</td>
-<td>A short Python call or one CLI line, on your laptop</td>
-<td>The roofline: compute-bound and memory-bound decode, prefill with its fixed floor, serial batch admission</td>
+<td><strong>berth</strong></td>
+<td>predicts what a workload costs and how fast it runs on a given accelerator, before you rent it</td>
 </tr>
 <tr>
-<td>Which placements to compare</td>
-<td>The silicon and provider list to evaluate</td>
-<td>$/Mtok, TTFT, TPOT per placement, and the premium between them</td>
+<td><strong>sounding</strong></td>
+<td>measures the real thing and checks the prediction</td>
 </tr>
 <tr>
-<td>The decision</td>
-<td>Nothing you cannot inspect</td>
-<td>Auditable math, every term tagged and checkable</td>
+<td><strong>pilot</strong></td>
+<td>watches for change, re-decides, and proves what the change saved</td>
 </tr>
 </tbody>
 </table>
-<h2 id="why-this-exists">Why this exists<a class="headerlink" href="#why-this-exists" title="Permanent link">&para;</a></h2>
-<p>Compute is priced by the GPU-hour but consumed as useful work under a latency
-constraint, and no standard unit bridges the two. A GPU-hour is a list price. The
-cost of a token delivered within its SLO is what you actually buy, and it varies
-by multiples across accelerators that quote similar hourly rates. berth measures
-that gap so placement becomes a decision backed by physics rather than habit.</p>
-<p>The result is often counterintuitive. On measured hardware, an L40S delivers
-Llama-3-8B decode tokens 1.6x cheaper per token than an H100 PCIe at matched
-concurrency: the H100 decodes about twice as fast but costs about three times as
-much per hour. The premier chip is the wrong chip for that workload.</p>
-<p>Read that with its condition attached. It is a cost result at matched batch, not
-a result at matched latency. Declare a tight enough per-token deadline and the
-L40S stops being feasible at all, at which point its cost per unit of compliant
-work is not low, it is undefined. Which card wins is a function of your SLO, and
-that is the whole reason a placement estimator exists rather than a league
-table.</p>
-<h2 id="what-berth-is-precisely">What berth is, precisely<a class="headerlink" href="#what-berth-is-precisely" title="Permanent link">&para;</a></h2>
-<p>berth is an ESTIMATOR. It predicts from a model; it does not require the workload
-to be running. The measurement harness that validates it (see Validation) is a
-separate component: it observes real hardware to check the estimator. Keep the
-distinction in mind. You use the estimator; the harness is how we earned your
-trust in it.</p>
-<h2 id="a-quick-look-at-functionality">A quick look at functionality<a class="headerlink" href="#a-quick-look-at-functionality" title="Permanent link">&para;</a></h2>
-<p>berth's core is a handful of calls:</p>
-<ul>
-<li><code>estimate(sig, silicon, price_hr)</code>: return cost_per_mtok, TTFT, TPOT for one placement, plus its placement_premium</li>
-<li><code>PlacementClient.place(sig, policy)</code>: choose the cheapest placement meeting an SLO</li>
-<li><code>PlacementClient.estimate(sig)</code>: score every candidate placement, filter on feasibility</li>
-</ul>
+<p>All open source, Apache-2.0. All reproducible from published traces.</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>berth-placement
+berth<span class="w"> </span>place<span class="w"> </span>--workload-class<span class="w"> </span>voice<span class="w"> </span>--model<span class="w"> </span>llama3-8b<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--incumbent<span class="w"> </span>h100-pcie<span class="w"> </span>--slo-ms<span class="w"> </span><span class="m">800</span>
+</code></pre></div>
+<hr />
+<h2 id="adaptive-placement">Adaptive placement<a class="headerlink" href="#adaptive-placement" title="Permanent link">&para;</a></h2>
+<p>Deciding which chip, which provider, and at which price a model runs under a
+stated p99, then moving it as prices, capacity, and traffic shift.</p>
+<p><strong>It is workload-conditional.</strong> The answer depends on your token lengths and
+your concurrency, not on a benchmark average. The right chip can invert inside
+a single workload as concurrency changes.</p>
+<p><strong>It is bounded by your service level.</strong> A placement that misses your p99 has
+no price, not a low one. That is the distinction a price sheet cannot express,
+and the reason a league table is the wrong object.</p>
+<p><strong>It constantly adapts.</strong> Prices move, models ship, capacity changes. So does
+the answer, and most teams decide once and never look again.</p>
+<hr />
+<h2 id="what-we-found">What we found<a class="headerlink" href="#what-we-found" title="Permanent link">&para;</a></h2>
+<p>Fit the decode constant on one accelerator, then predict a different
+accelerator it has never seen, on different memory technology.</p>
+<p><strong>Worst held-out fold: 9.5 percent, against a 15 percent gate published before
+the first run.</strong></p>
+<p>The residual is the real spread between the two cards. One constant across
+both costs about nine percent, which is the price of generality and is stated
+rather than fitted away.</p>
+<p>Two more from the same corpus:</p>
+<p><strong>Prefill admission is serial, and not as a quirk of one server.</strong> Effective
+parallelism 1.09 under vLLM and 1.01 under SGLang. Modelling that one term
+drops first-token error from roughly 65 percent to under 9.</p>
+<p><strong>Decode is stack-independent to three decimals.</strong> 0.854 under SGLang against
+0.850 under vLLM, same card, same model.</p>
+<p>Every trace is downloadable. Every number is reproducible.</p>
+<p><a href="validation-p0/">The full validation record</a></p>
+<hr />
+<h2 id="arithmetic-not-a-black-box">Arithmetic, not a black box<a class="headerlink" href="#arithmetic-not-a-black-box" title="Permanent link">&para;</a></h2>
+<p>A closed-form roofline plus a queueing term. Roughly a page of maths, no
+learned components. Every prediction ships with the physical term that
+produced it and a label saying whether that term rests on a measurement or a
+datasheet.</p>
+<p>It runs in your environment. Nothing leaves your machine.</p>
+<p>When it is wrong, <a href="https://github.com/reckonresearch/berth/blob/main/DEFECTS.md">we publish that
+too</a>: eleven
+instrument failures, what caused each, and the test that fails if it returns.
+A measurement tool that has never been caught lying has not been used hard
+enough.</p>
+<hr />
 <h2 id="start-here">Start here<a class="headerlink" href="#start-here" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="quickstart/">Get Started</a>: install and run your first estimate in two minutes</li>
-<li><a href="tutorials/">Tutorials</a>: four runnable programs, 101 through 401</li>
-<li><a href="the-physics/">The Physics</a>: the roofline, term by term, so you can audit it</li>
-<li><a href="validation-p0/">Validation (P0)</a>: how berth's predictions were checked against real hardware</li>
-<li><a href="placement-premium/">The Placement Premium</a>: the headline quantity and how to read it</li>
-<li><a href="examples/">Worked Examples</a>: end-to-end, reproducible from published data</li>
-<li><a href="verify-and-contribute/">Verify and Contribute</a>: check the estimate on your own silicon</li>
-<li><a href="api-reference/">API Reference</a></li>
-</ul>
-<p>berth is a Python library with a command-line front end. <code>berth estimate</code>,
-<code>berth premium</code> and <code>berth list</code> wrap the same public API, so the fastest path
-to a number needs no Python.</p>
+<p><strong>New to this</strong> · <a href="quickstart/">Get started</a> in two minutes ·
+<a href="tutorials/">Tutorials</a>, four runnable programs</p>
+<p><strong>Evaluating it</strong> · <a href="the-physics/">The physics</a>, term by term ·
+<a href="validation-p0/">Validation</a>, how it was checked against hardware ·
+<a href="placement-premium/">The placement premium</a></p>
+<p><strong>Deciding whether to self-host</strong> · <a href="versus/">Self-host or API</a>, both on one
+axis</p>
+<p><strong>Running it continuously</strong> · <a href="pilot/">pilot</a> ·
+<a href="declaring.md">Declaring what to watch</a> ·
+<a href="holdout/">The Holdout Protocol</a>, how a saving is proven</p>
+<p><strong>Contributing</strong> · <a href="verify-and-contribute/">Verify and contribute</a> a cell we
+have not measured</p>
+<hr />
+<p>Built by <a href="https://reckonresearch.com">Reckon Research</a>.</p>
 
 
 
