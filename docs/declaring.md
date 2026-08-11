@@ -1,6 +1,6 @@
 # Declaring what to watch
 
-`.berth/classes.yaml`, in **your** repository. Pilot reads it and writes
+`.berth/classes.yaml`, in **your** repository. pilot reads it and writes
 nothing outside the paths it names.
 
 ```yaml

@@ -48,22 +48,27 @@ theme:
     - search.highlight
 
 nav:
+  - Reckon Research: index.md
   - berth:
-      - Overview: index.md
+      - Overview: berth.md
       - Get Started: quickstart.md
       - Silicon and Models: silicon-and-models.md
       - The Physics: the-physics.md
       - The Placement Premium: placement-premium.md
+      - API Reference: api-reference.md
+  - sounding:
+      - Overview: sounding.md
       - Validation (P0): validation-p0.md
       - Verify and Contribute: verify-and-contribute.md
-      - API Reference: api-reference.md
-  - Pilot:
+  - pilot:
       - Overview: pilot.md
-      - Self-host or API: versus.md
       - Declaring What to Watch: declaring.md
       - Receipts and the Ledger: receipts.md
-      - The Holdout Protocol: holdout.md
       - Internals: pilot-internals.md
+  - Standards:
+      - The Holdout Protocol: holdout.md
+  - Deciding:
+      - Self-host or API: versus.md
   - Worked Examples:
       - Overview: examples/index.md
       - Reproduce the Placement Premium: examples/premium-walkthrough.md
