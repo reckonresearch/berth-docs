@@ -811,10 +811,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-static-placement-fails" class="md-nav__link">
+  <a href="#what-routing-means-here" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why static placement fails
+        What routing means here
       
     </span>
   </a>
@@ -822,10 +822,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-does" class="md-nav__link">
+  <a href="#the-loop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What it does
+        The loop
       
     </span>
   </a>
@@ -833,10 +833,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-never-does" class="md-nav__link">
+  <a href="#autonomy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What it never does
+        Autonomy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The guardrails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kill-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The kill switch
       
     </span>
   </a>
@@ -855,21 +877,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-you-use-it" class="md-nav__link">
+  <a href="#what-it-never-does" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How you use it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-a-pull-request-and-not-an-alert" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why a pull request and not an alert
+        What it never does
       
     </span>
   </a>
@@ -1655,10 +1666,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-static-placement-fails" class="md-nav__link">
+  <a href="#what-routing-means-here" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why static placement fails
+        What routing means here
       
     </span>
   </a>
@@ -1666,10 +1677,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-does" class="md-nav__link">
+  <a href="#the-loop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What it does
+        The loop
       
     </span>
   </a>
@@ -1677,10 +1688,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-never-does" class="md-nav__link">
+  <a href="#autonomy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What it never does
+        Autonomy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The guardrails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-kill-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The kill switch
       
     </span>
   </a>
@@ -1699,21 +1732,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-you-use-it" class="md-nav__link">
+  <a href="#what-it-never-does" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How you use it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-a-pull-request-and-not-an-alert" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why a pull request and not an alert
+        What it never does
       
     </span>
   </a>
@@ -1774,157 +1796,170 @@
 
 
 <h1 id="pilot">pilot<a class="headerlink" href="#pilot" title="Permanent link">&para;</a></h1>
-<p><strong>The adaptive placement agent.</strong> Watches for change, adapts the placement,
-and proves what the change saved.</p>
-<p>berth decides where a workload should run. sounding checks that the decision
-was right. pilot is the part that keeps deciding, because the answer does not
-hold still.</p>
-<p>A placement is not a decision, it is a position that decays. A model version
-ships and the byte profile changes. A provider moves a rate. A cell lands in
-the corpus and a prior becomes a measurement. The answer that was right last
-month is not right this month, and nobody checks, because checking means
-re-measuring and nothing says when it is worth doing.</p>
-<p>pilot does the checking, and adapts.</p>
+<p><strong>The adaptive placement agent and router.</strong> Watches for change, decides where
+a workload should run, moves it, and proves what the move saved.</p>
+<p>berth predicts what a placement costs. sounding checks the prediction against
+hardware. pilot is the part that keeps deciding, and acts on the answer.</p>
 <div class="admonition note">
 <p class="admonition-title">On the name</p>
 <p>A harbour pilot boards a vessel, guides it to berth, owns neither the ship
 nor the port, and is paid by the vessel. That is the position exactly: we
 route on behalf of the buyer, to any provider, and no provider pays us.</p>
 </div>
-<h2 id="why-static-placement-fails">Why static placement fails<a class="headerlink" href="#why-static-placement-fails" title="Permanent link">&para;</a></h2>
-<p>Almost every team decides once. A benchmark, a spec sheet, a conversation, and
-then the configuration stays until something breaks.</p>
-<p>Meanwhile the inputs move continuously. Model versions ship monthly or faster.
-Provider rates change. Serving stacks cut releases, and a stack upgrade alone
-has been measured at over twice the throughput on identical hardware. Traffic
-shape shifts as a product grows.</p>
-<p><strong>A decision made once against inputs that never stop moving is wrong within
-weeks, and stays wrong silently.</strong> That is the gap adaptive placement closes,
-and pilot is the part that closes it.</p>
-<h2 id="what-it-does">What it does<a class="headerlink" href="#what-it-does" title="Permanent link">&para;</a></h2>
-<p><strong>Watches.</strong> Model registries, serving-stack releases, provider prices, and
-the corpus. Four sources, polled on a schedule.</p>
-<p><strong>Adapts.</strong> When something moves, it re-runs the placement decision against
-the new inputs. Not on a review cycle and not when somebody remembers: when
-the input changes.</p>
-<p><strong>Proposes.</strong> When the answer changes by enough to matter, it opens a pull
-request against your deployment configuration with the diff and the evidence
-attached. The workload moves when you merge it.</p>
-<p><strong>Proves.</strong> Under the <a href="../holdout/">Holdout Protocol</a>, a declared slice of
-traffic stays on the old placement so the saving can be measured rather than
-claimed.</p>
-<p>Then it starts again. A placement that was adapted last month is a placement
-that can decay again, and the loop has no end state.</p>
-<h2 id="what-it-never-does">What it never does<a class="headerlink" href="#what-it-never-does" title="Permanent link">&para;</a></h2>
-<p><strong>It never touches a request.</strong> No proxy, no gateway, no traffic. Your own
-infrastructure moves the workload; pilot decides where and proves what the
-change saved.</p>
-<p><strong>It never merges.</strong> <code>GitHubClient.merge()</code> exists solely to raise, so the
-refusal is explicit rather than an absence. It cannot write to a default
-branch and cannot touch a path you did not declare. Enforced in code rather
-than in a token scope, because a scope is a promise about configuration and
-this is a promise about code.</p>
-<p><strong>It never owns capacity.</strong> No resale, no reserved blocks, no inventory. The
-moment inventory exists there is a reason to route toward it.</p>
+<h2 id="what-routing-means-here">What routing means here<a class="headerlink" href="#what-routing-means-here" title="Permanent link">&para;</a></h2>
+<p>pilot routes at the <strong>workload level</strong>, not the request level.</p>
+<p>A BGP speaker routes without carrying a single packet's payload. It programs
+the forwarding plane and the forwarding plane moves the traffic. pilot works
+the same way: it changes the deployment configuration, and your existing
+gateway, load balancer or orchestrator sends traffic to the new placement.</p>
+<p><strong>This is a deliberate architectural boundary, not a limitation.</strong></p>
+<p>Sitting in the request path would add latency to every call, make our
+availability your availability, and compromise the only thing that makes the
+measurement worth anything. A party that carries traffic cannot credibly rank
+the placements it carries traffic for.</p>
+<p>So: pilot decides, executes, and proves. It does not proxy.</p>
+<h2 id="the-loop">The loop<a class="headerlink" href="#the-loop" title="Permanent link">&para;</a></h2>
+<p><strong>Watch.</strong> Model registries by commit, serving-stack releases, provider
+prices, and the corpus. Four sources, polled on a schedule.</p>
+<p><strong>Decide.</strong> When an input moves, re-run the placement decision. A placement
+that misses your bound is excluded rather than ranked cheaply, because its
+cost per served token is undefined rather than high.</p>
+<p><strong>Move.</strong> Where your declared autonomy policy permits, pilot executes the
+change: it opens a pull request against your deployment configuration and
+merges it, and your delivery pipeline moves the workload. Where the policy
+does not permit, it opens the pull request and stops.</p>
+<p><strong>Prove.</strong> Under the <a href="../holdout/">Holdout Protocol</a>, a declared slice of
+traffic stays on the old placement so the difference can be measured rather
+than claimed.</p>
+<p>Then it starts again. A placement adapted last month can decay again, and the
+loop has no end state.</p>
+<h2 id="autonomy">Autonomy<a class="headerlink" href="#autonomy" title="Permanent link">&para;</a></h2>
+<p>A system that only proposes is a recommendation engine with extra steps. If
+every change waits on someone noticing a pull request, the loop is as slow as
+the human in it.</p>
+<p><strong>Authority is declared once, in advance, in your repository.</strong> Not per
+change. You commit an autonomy policy and that commit is the authorization: a
+change you reviewed, in your history, under your credential. The human
+decision moves from approving a change to approving a class of change under
+stated conditions, which is the decision a human is good at.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">autonomy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">window</span><span class="w">                    </span><span class="c1"># frozen | propose | window | execute</span>
+<span class="w">      </span><span class="nt">windows</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[[</span><span class="nv">6</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">5</span><span class="p p-Indicator">]]</span><span class="w">             </span><span class="c1"># Sunday 02:00 to 05:00 UTC</span>
+<span class="w">      </span><span class="nt">min_margin_to_execute</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.30</span>
+<span class="w">      </span><span class="nt">min_hours_between_moves</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">168</span>
+<span class="w">      </span><span class="nt">max_moves_per_pass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">blackout_dates</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2026-12-20&quot;</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>frozen</code></td>
+<td>nothing, not even a proposal</td>
+</tr>
+<tr>
+<td><code>propose</code></td>
+<td>open a pull request and stop. <strong>The default</strong></td>
+</tr>
+<tr>
+<td><code>window</code></td>
+<td>execute inside declared windows, propose outside them</td>
+</tr>
+<tr>
+<td><code>execute</code></td>
+<td>execute whenever the guardrails pass</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-guardrails">The guardrails<a class="headerlink" href="#the-guardrails" title="Permanent link">&para;</a></h2>
+<p>Six, and every one can only refuse. There is no path where a guardrail permits
+something the autonomy level did not already allow, and that property is
+pinned by test.</p>
+<p><strong>Blast radius.</strong> A cap on executions per pass. One bad corpus update must not
+be able to move a fleet.</p>
+<p><strong>Rate limit.</strong> A minimum interval between moves for one class. A placement
+that moves twice in a week is oscillating, not adapting.</p>
+<p><strong>Blackout dates.</strong> A freeze is a real thing in most organisations, and a
+placement system that ignores one gets uninstalled.</p>
+<p><strong>A higher bar to act than to ask.</strong> The margin required to move production
+unattended exceeds the margin required to open a pull request. That gap is
+deliberate.</p>
+<p><strong>A measurement requirement.</strong> An unmeasured placement is never executed by
+default, regardless of how good the estimate looks. A spec-sheet prior has
+been observed above 40 percent error in this corpus.</p>
+<p><strong>Rollback, which outranks savings.</strong> A move that breaches the service level
+reverts regardless of what it saved, because a placement that misses its bound
+is not a cheap placement. A move whose observed cost exceeds its estimate by
+more than the tolerance also reverts, and the cell is flagged for measurement.</p>
+<h2 id="the-kill-switch">The kill switch<a class="headerlink" href="#the-kill-switch" title="Permanent link">&para;</a></h2>
+<p>Delete <code>.berth/classes.yaml</code>. Nothing runs.</p>
+<p>That is deliberate. An autonomy system whose off switch requires contacting
+the vendor is not one anyone should install.</p>
 <h2 id="the-control-plane">The control plane<a class="headerlink" href="#the-control-plane" title="Permanent link">&para;</a></h2>
 <p>pilot has a control plane: the surface where you see what it is doing.</p>
 <p><code>.berth/STATUS.md</code>, rewritten into your repository on every pass. Every class,
 what it is holding, what the estimator recommends <strong>now</strong> rather than when the
-proposal opened, open proposals linked, settled periods, and when each source
-was last polled.</p>
+last proposal opened, executions and their outcomes, settled periods, and when
+each source was last polled.</p>
 <p>A file rather than a dashboard. Version controlled, so its history is the
 history of the account. Renders wherever your repository is browsed. No login,
-nothing to remember to visit, and deleting it is how you turn it off.</p>
-<h2 id="how-you-use-it">How you use it<a class="headerlink" href="#how-you-use-it" title="Permanent link">&para;</a></h2>
-<p><strong>Once, at setup.</strong> Commit <code>.berth/classes.yaml</code> declaring what to watch, and
-grant write access to a branch. That is the whole integration.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-<span class="nt">repo</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">allowed_paths</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy/voice.yaml</span>
-<span class="nt">classes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">voice-agent-prod</span>
-<span class="w">    </span><span class="nt">model_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NousResearch/Meta-Llama-3-8B</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-8b</span>
-<span class="w">    </span><span class="nt">running_on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h100-pcie</span>
-<span class="w">    </span><span class="nt">config_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy/voice.yaml</span>
-<span class="w">    </span><span class="nt">slo</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">metric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">p99_ttft_ms</span>
-<span class="w">      </span><span class="nt">bound_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">800</span>
-<span class="w">    </span><span class="nt">workload</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">concurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-<span class="w">      </span><span class="nt">prompt_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512</span>
-<span class="w">      </span><span class="nt">output_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
-<span class="w">      </span><span class="nt">mtok_per_hour</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12.0</span>
-</code></pre></div>
-<p>The declaration lives in <strong>your</strong> repository. Changing what pilot may watch is
-a pull request you review, the history of what was declared is in your git
-log, and revoking it is deleting a file.</p>
-<p><a href="../declaring/">Declaring what to watch</a></p>
-<p><strong>Then nothing.</strong> It runs on a schedule. Most passes produce no pull request,
-and that is the design rather than a failure.</p>
-<p><strong>When a pull request arrives</strong>, read it and merge or close. Merging is the
-deploy: your existing delivery picks up the configuration change. Closing is a
-rejection, and it is respected for ninety days, because a customer saying not
-this quarter means not this quarter.</p>
-<h2 id="why-a-pull-request-and-not-an-alert">Why a pull request and not an alert<a class="headerlink" href="#why-a-pull-request-and-not-an-alert" title="Permanent link">&para;</a></h2>
-<p>An alert creates work. A diff with the evidence attached is work already done,
-arriving in a review workflow you already have, where it can be discussed,
-amended, rejected or merged.</p>
-<p>It also leaves the decision in your history rather than in a vendor dashboard,
-and reverting it is reverting the commit.</p>
-<p>The body carries the config diff, both estimates with their confidence band,
-how much of the answer rests on measurement rather than a datasheet, the bound
-it was optimised for, and a link to the traces. <strong>You should be able to
-disagree with the recommendation from the body alone.</strong></p>
+nothing to remember to visit.</p>
+<h2 id="what-it-never-does">What it never does<a class="headerlink" href="#what-it-never-does" title="Permanent link">&para;</a></h2>
+<p><strong>It never proxies a request.</strong> No data plane, no traffic, no latency added to
+any call.</p>
+<p><strong>It never writes outside the paths you declared.</strong> Enforced in code rather
+than in a token scope, because a scope is a promise about configuration and
+this is a promise about code.</p>
+<p><strong>It never merges without a stated policy.</strong> <code>merge()</code> refuses
+unconditionally; <code>merge_proposal</code> requires the autonomy rule that permitted it
+and writes that rule into the merge commit. A change that landed unattended
+says on its face which rule allowed it, and reverting it is reverting a
+commit.</p>
+<p><strong>It never owns capacity.</strong> No resale, no reserved blocks, no inventory. The
+moment inventory exists there is a reason to route toward it.</p>
 <h2 id="why-it-usually-says-nothing">Why it usually says nothing<a class="headerlink" href="#why-it-usually-says-nothing" title="Permanent link">&para;</a></h2>
-<p>Most triggers should produce no proposal. pilot stays quiet when:</p>
-<ul>
-<li>The answer did not change</li>
-<li>The improvement sits inside the confidence band, so it is not
-  distinguishable from noise</li>
-<li>The improvement clears the band but not the cost of moving. The gain is real
-  and smaller than collecting it</li>
-<li>The same proposal is already open</li>
-<li>You rejected this move and the cooldown has not elapsed</li>
-</ul>
-<p><strong>An agent that opens a pull request every week gets muted, and a muted agent
-is worse than none because it looks like coverage.</strong> The suppression reasons
-are recorded and reported, and they are the more informative half.</p>
+<p>Most passes produce no proposal and no execution. pilot stays quiet when the
+answer did not change, when the improvement sits inside the confidence band,
+when the gain is real and smaller than the cost of collecting it, when the
+same proposal is already open, and when you rejected this move and the
+cooldown has not elapsed.</p>
+<p><strong>An agent that acts every week gets muted, and a muted agent is worse than
+none because it looks like coverage.</strong> The suppression reasons are recorded
+and reported, and they are the more informative half.</p>
 <h2 id="the-daily-line">The daily line<a class="headerlink" href="#the-daily-line" title="Permanent link">&para;</a></h2>
 <p>Silence is right about action and wrong about communication. A team that hears
 nothing for three weeks does not conclude all is well, they conclude it
 stopped running.</p>
-<p>Every pass produces a short report: what was checked, against how many
-sources, whether any were unreachable, and what the changes so far have been
-worth.</p>
-<div class="highlight"><pre><span></span><code>pilot  2026-08-11
+<div class="highlight"><pre><span></span><code>pilot  2026-08-12
 ================================================================
 
-Checked 4 workload classes against 5 sources. Every one is holding
-its service level on the cheapest placement we can find. Nothing to do.
+Checked 4 workload classes against 5 sources. One placement moved.
+Every other class is holding its service level on the cheapest
+placement we can find.
+
+  MOVED
+  voice-agent-prod   h100-pcie to mi300x   31% margin, executed 02:14 UTC
 
   SAVINGS
   realized, running total       $      32,142
     last 24 hours               $         575
-    last 7 days                 $       4,025
   0% of that is VERIFIED. Every figure above is ESTIMATED.
 </code></pre></div>
-<p><strong>Three quantities, never summed.</strong> <em>Realized</em> is a merged proposal accruing
-from the moment it merged. <em>Available</em> is an open pull request nobody merged,
-which has saved nothing. <em>Foregone</em> is a proposal you declined, reported
-because a constraint has a price and the price should be visible to whoever
-set it.</p>
 <p><a href="../receipts/">Receipts and the ledger</a></p>
 <h2 id="running-it">Running it<a class="headerlink" href="#running-it" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>berth<span class="w"> </span>pilot<span class="w"> </span>--classes<span class="w"> </span>.berth/classes.yaml<span class="w"> </span>--state<span class="w"> </span>.berth/state.json
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>berth-placement
+pilot<span class="w"> </span>--classes<span class="w"> </span>.berth/classes.yaml<span class="w"> </span>--state<span class="w"> </span>.berth/state.json
 </code></pre></div>
-<p>Shadow by default: it decides everything and opens nothing. That is the
-correct first posture. Read what it would have said for a while before letting
-it say anything, and the kill criterion is computable from that alone: fewer
-than one trigger in four producing a change that clears the hurdle means the
-trigger set is wrong.</p>
-<p><a href="../pilot-internals/">Internals</a></p>
+<p>Shadow by default: it decides everything and changes nothing. That is the
+correct first posture, and the kill criterion is computable from shadow data
+alone. Fewer than one trigger in four producing a change that clears the
+hurdle means the trigger set is wrong.</p>
+<p><a href="../declaring/">Declaring what to watch</a> · <a href="../pilot-internals/">Internals</a></p>
 
 
 
