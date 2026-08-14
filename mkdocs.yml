@@ -67,8 +67,10 @@ nav:
   - pilot, the agent:
       - Overview: pilot.md
       - Declaring What to Watch: declaring.md
+      - Executing a Change: executing.md
       - Receipts and the Ledger: receipts.md
       - Internals: pilot-internals.md
+  - Roadmap: roadmap.md
   - Standards:
       - The Served Token: the-unit.md
       - The Holdout Protocol: holdout.md
